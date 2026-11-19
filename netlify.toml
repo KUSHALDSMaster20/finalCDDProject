@@ -6,6 +6,9 @@
 [build.environment]
   VITE_API_URL = "https://finalcddproject.onrender.com"
 
+[functions]
+  directory = "netlify/functions"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
