@@ -29,11 +29,16 @@ services:
 
   frontend:
     build: ./frontend
+<<<<<<< HEAD
     environment:
       VITE_API_URL: ${VITE_API_URL:-}
       VITE_PROXY_TARGET: http://backend:5000
     ports:
       - "3000:3000"
+=======
+    ports:
+      - "3000:80"
+>>>>>>> c4fdfa9 (version 3.3.0)
     depends_on:
       - backend
     restart: unless-stopped

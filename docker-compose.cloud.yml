@@ -45,14 +45,42 @@ services:
 
   frontend:
     build: ./frontend
+<<<<<<< HEAD
     environment:
       VITE_API_URL: ""
       VITE_PROXY_TARGET: http://backend:5000
     ports:
       - "80:3000"
+=======
+    expose:
+      - "80"
+>>>>>>> c4fdfa9 (version 3.3.0)
     depends_on:
       - backend
     restart: unless-stopped
 
+<<<<<<< HEAD
 volumes:
   mysql-data:
+=======
+  caddy:
+    image: caddy:2-alpine
+    environment:
+      SITE_ADDRESS: ${SITE_ADDRESS:?Set SITE_ADDRESS in .env}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      - frontend
+    restart: unless-stopped
+
+volumes:
+  mysql-data:
+  caddy-data:
+  caddy-config:
+>>>>>>> c4fdfa9 (version 3.3.0)

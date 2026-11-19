@@ -4,9 +4,21 @@
   publish = "dist"
 
 [build.environment]
+<<<<<<< HEAD
   # Browser API requests use the same-origin Netlify proxy.
   VITE_API_URL = ""
   # WebSocket traffic connects directly to Render.
+=======
+<<<<<<< HEAD
+  # Browser API requests use the same-origin Netlify proxy.
+  VITE_API_URL = ""
+  # WebSocket traffic connects directly to Render.
+=======
+  # Keep browser API calls same-origin; Netlify proxies them to the backend.
+  VITE_API_URL = ""
+  # WebSockets cannot use Netlify's HTTP rewrite proxy.
+>>>>>>> f52b18b (version 3.3.0)
+>>>>>>> c4fdfa9 (version 3.3.0)
   VITE_WS_URL = "wss://finalcddproject.onrender.com"
 
 [functions]

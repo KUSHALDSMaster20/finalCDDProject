@@ -27,9 +27,19 @@ Campus Commons now combines a campus resource board with online classes, family/
 
 The containers connect to XAMPP MySQL through `host.docker.internal:3306`. Keep XAMPP MySQL running while the app is in use.
 
+<<<<<<< HEAD
 ## Run without Docker
 
 Requirements: Java 17, Maven, Node.js 20+, npm, XAMPP MySQL, and the imported schema.
+=======
+## Hosting
+
+The full free-hosting walkthrough is in [docs/HOSTING.md](docs/HOSTING.md). It uses Oracle Cloud's free Ampere VM to run the frontend, Java API, MySQL, and LibreTranslate together with Docker Compose, and Caddy to provide HTTPS.
+
+## Run without Docker
+
+Requirements: Java 17, Maven, Node.js 24+, npm, XAMPP MySQL, and the imported schema.
+>>>>>>> c4fdfa9 (version 3.3.0)
 
 In one terminal, set the database variables and start the API:
 
@@ -54,6 +64,10 @@ npm run dev
 
 Visit `http://localhost:3000`. Vite proxies browser requests to `http://localhost:5000` by default.
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> c4fdfa9 (version 3.3.0)
 ## Deploy on Render
 
 The web service needs a **remote MySQL-compatible database**. `127.0.0.1` inside a Render container points back to that same container, not to XAMPP on your computer. If login and registration fail with MySQL `Connection refused`, set these database values in the Render service's **Environment** page. A no-cost option is a TiDB Cloud Starter database; create a cluster first and use the connection values it gives you:
@@ -101,6 +115,11 @@ For a server that stays on until you stop it, a practical free option is an Orac
 
 The cloud Compose file initializes a new MySQL volume from `database/schema.sql` once. Back up that volume regularly. Keep `.env` private and do not commit it. Oracle requires a payment card for identity verification, and free resource availability and policies can change. A free VM is not guaranteed to stay available forever or provide an uptime SLA.
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> f52b18b (version 3.3.0)
+>>>>>>> c4fdfa9 (version 3.3.0)
 ## Features
 
 - Student, teacher, and parent account portals. Existing lecturer accounts are accepted as teacher accounts.
