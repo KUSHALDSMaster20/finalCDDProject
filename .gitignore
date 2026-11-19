@@ -1,0 +1,19 @@
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+
+# Build files
+dist/
+build/
+backend/target/
+
+# Logs
+*.log
+
+# Operating system
+.DS_Store
+Thumbs.db
