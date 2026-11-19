@@ -67,7 +67,8 @@ function App() {
 
     if (!response.ok) {
       throw new Error(
-        data.error || 'The request could not be completed.'
+        data.error ||
+          `Campus Commons API returned HTTP ${response.status}. Check the Render service and its database connection.`
       );
     }
 

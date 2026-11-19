@@ -1,6 +1,7 @@
 package edu.campuscommons;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.*;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -83,5 +84,6 @@ public class ApiController {
     @PostMapping("/translate") public Map<String,Object> translate(@RequestHeader(value="Authorization",required=false) String auth,@RequestBody Map<String,String>b){TokenService.Claims c=claims(auth);allow(c,"student","teacher");String text=trim(b.get("text")),target=trim(b.get("targetLanguage")),source=trim(b.get("sourceLanguage"));if(text.isBlank()||target.isBlank())throw new ApiError(400,"Enter text and choose a target language.");if(text.length()>4000)throw new ApiError(400,"Text must be 4,000 characters or fewer.");Map<String,Object> payload=new HashMap<>();payload.put("q",text);payload.put("target",target);String from=source.isBlank()?"auto":source;try{if(!translateKey.isBlank()){if(!from.equalsIgnoreCase("auto"))payload.put("source",from);Map<?,?> result=http.post().uri("https://translation.googleapis.com/language/translate/v2?key="+translateKey).contentType(MediaType.APPLICATION_JSON).body(payload).retrieve().body(Map.class);Map<?,?> data=(Map<?,?>)result.get("data");Map<?,?> translation=(Map<?,?>)((List<?>)data.get("translations")).get(0);return Map.of("translatedText",translation.get("translatedText"),"provider","Google Cloud Translation");}payload.put("source",from);Map<?,?> result=http.post().uri(libreTranslateUrl+"/translate").contentType(MediaType.APPLICATION_JSON).body(payload).retrieve().body(Map.class);return Map.of("translatedText",result.get("translatedText"),"provider","Self-hosted translator");}catch(Exception e){throw new ApiError(503,"Translation failed. Check that LibreTranslate is running and that its language models are loaded.");}}
     private String trim(String s){return s==null?"":s.trim();}
     @ExceptionHandler(ApiError.class) ResponseEntity<?> apiError(ApiError e){return ResponseEntity.status(e.status).body(Map.of("error",e.getMessage()));}
+    @ExceptionHandler(DataAccessException.class) ResponseEntity<?> databaseError(DataAccessException e){return ResponseEntity.status(503).body(Map.of("error","Campus Commons cannot reach its database. Check the Render DB_HOST, DB_PORT, DB_NAME, DB_USER, and DB_PASSWORD settings."));}
     static class ApiError extends RuntimeException {final int status;ApiError(int status,String message){super(message);this.status=status;}}
 }
