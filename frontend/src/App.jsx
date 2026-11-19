@@ -2,6 +2,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 const API = import.meta.env.VITE_API_URL || '';
+const WS_API = import.meta.env.VITE_WS_URL || '';
 const STORAGE = 'campus-session-token';
 
 const pages = [
@@ -56,7 +57,7 @@ function App() {
     } catch (error) {
       if (error instanceof TypeError) {
         throw new Error(
-          'Campus Commons could not reach its API. Start Docker Compose and make sure XAMPP MySQL is running.'
+          'Campus Commons could not reach its API. Check that the deployed backend is running and connected to its database.'
         );
       }
       throw error;
@@ -2067,9 +2068,11 @@ function VideoRoom({
           localRef.current.srcObject = stream;
         }
 
-        const wsBase = API
-          ? API.replace(/^http/, 'ws')
-          : `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}`;
+        const wsBase = WS_API
+          ? WS_API.replace(/^http/, 'ws')
+          : API
+            ? API.replace(/^http/, 'ws')
+            : `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}`;
 
         const ws = new WebSocket(
           `${wsBase}/ws/meeting/${encodeURIComponent(code)}?token=${encodeURIComponent(token)}`

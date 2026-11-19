@@ -16,6 +16,7 @@ await build({
   minify: true,
   define: {
     'import.meta.env.VITE_API_URL': JSON.stringify(process.env.VITE_API_URL || ''),
+    'import.meta.env.VITE_WS_URL': JSON.stringify(process.env.VITE_WS_URL || ''),
     'import.meta.env.VITE_AI_MODE': JSON.stringify(process.env.VITE_AI_MODE || ''),
   },
 });
