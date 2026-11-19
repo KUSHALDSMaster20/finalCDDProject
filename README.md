@@ -54,6 +54,24 @@ npm run dev
 
 Visit `http://localhost:3000`. Vite proxies browser requests to `http://localhost:5000` by default.
 
+## Deploy on Render
+
+The web service needs a **remote MySQL-compatible database**. `127.0.0.1` inside a Render container points back to that same container, not to XAMPP on your computer. If login and registration fail with MySQL `Connection refused`, set these database values in the Render service's **Environment** page. A no-cost option is a TiDB Cloud Starter database; create a cluster first and use the connection values it gives you:
+
+```text
+DB_HOST=<database host>
+DB_PORT=<database port, commonly 4000 for TiDB>
+DB_NAME=<database name>
+DB_USER=<database username>
+DB_PASSWORD=<database password>
+DB_SSL_MODE=VERIFY_IDENTITY
+JWT_SECRET=<a long random secret>
+```
+
+Never use `DISABLED` for a public cloud database. Use the TLS mode specified by your provider. Save the variables and redeploy; the app creates its tables when it connects. Keep database credentials in Render's environment settings and never commit them. Free database services have quotas and availability limits; back up important data.
+
+Render free web services can spin down when idle, so the first request may take a while. They do not provide an always-on guarantee.
+
 ## Host it online for free
 
 For a server that stays on until you stop it, a practical free option is an Oracle Cloud Always Free VM. The app, MySQL database, and translator run together on the VM with Docker Compose. This avoids relying on your computer's XAMPP database. Oracle's free Ampere allowance is currently up to 2 OCPUs and 12 GB RAM, subject to regional capacity and account terms; Always Free instances can be reclaimed if they meet Oracle's idle thresholds, so this is not an uptime guarantee. See Oracle's [Always Free compute limits](https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm) and [free tier FAQ](https://www.oracle.com/cloud/free/faq/).
