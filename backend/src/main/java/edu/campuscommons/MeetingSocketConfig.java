@@ -16,7 +16,11 @@ public class MeetingSocketConfig implements WebSocketConfigurer {
     private final Relay relay;
     @Value("${app.cors.origin}") private String origin;
     public MeetingSocketConfig(TokenService tokens, JdbcTemplate db){this.relay=new Relay(tokens,db);}
+<<<<<<< HEAD
     @Override public void registerWebSocketHandlers(WebSocketHandlerRegistry registry){registry.addHandler(relay,"/ws/meeting/*").setAllowedOriginPatterns(Arrays.stream(origin.split(",")).map(String::trim).filter(s->!s.isEmpty()).toArray(String[]::new));}
+=======
+    @Override public void registerWebSocketHandlers(WebSocketHandlerRegistry registry){registry.addHandler(relay,"/ws/meeting/*").setAllowedOrigins(origin);}
+>>>>>>> 84687b719dadb2b8b6fedd94ed53cc87c674f615
     static class Relay extends TextWebSocketHandler {
         private final Map<String,Map<String,WebSocketSession>> rooms=new ConcurrentHashMap<>();
         private final ObjectMapper json=new ObjectMapper();

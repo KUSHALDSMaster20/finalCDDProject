@@ -1,4 +1,5 @@
 services:
+<<<<<<< HEAD
   mysql:
     image: mysql:8.4
     environment:
@@ -23,6 +24,15 @@ services:
       DB_PORT: ${DB_PORT:-3306}
       DB_USER: ${DB_USER:-root}
       DB_PASSWORD: ${DB_PASSWORD-campuscommons-local}
+=======
+  backend:
+    build: ./backend
+    environment:
+      DB_HOST: ${DB_HOST:-host.docker.internal}
+      DB_PORT: 3306
+      DB_USER: ${DB_USER:-root}
+      DB_PASSWORD: ${DB_PASSWORD:-}
+>>>>>>> 84687b719dadb2b8b6fedd94ed53cc87c674f615
       DB_NAME: ${DB_NAME:-campus_tracker}
       JWT_SECRET: ${JWT_SECRET:-local-development-secret-change-me}
       GOOGLE_TRANSLATE_API_KEY: ${GOOGLE_TRANSLATE_API_KEY:-}
@@ -32,12 +42,18 @@ services:
       PORT: 5000
       CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:3000}
     ports:
+<<<<<<< HEAD
       - "${API_BIND_ADDRESS:-127.0.0.1}:5000:5000"
     depends_on:
       mysql:
         condition: service_healthy
       libretranslate:
         condition: service_started
+=======
+      - "5000:5000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+>>>>>>> 84687b719dadb2b8b6fedd94ed53cc87c674f615
     restart: unless-stopped
 
   libretranslate:
@@ -49,14 +65,28 @@ services:
 
   frontend:
     build: ./frontend
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 84687b719dadb2b8b6fedd94ed53cc87c674f615
     environment:
       VITE_API_URL: ${VITE_API_URL:-}
       VITE_PROXY_TARGET: http://backend:5000
     ports:
       - "3000:3000"
+<<<<<<< HEAD
     depends_on:
       - backend
     restart: unless-stopped
 
 volumes:
   campus_mysql_data:
+=======
+=======
+    ports:
+      - "3000:80"
+>>>>>>> c4fdfa9 (version 3.3.0)
+    depends_on:
+      - backend
+    restart: unless-stopped
+>>>>>>> 84687b719dadb2b8b6fedd94ed53cc87c674f615

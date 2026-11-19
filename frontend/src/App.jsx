@@ -2,6 +2,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 const API = import.meta.env.VITE_API_URL || '';
+<<<<<<< HEAD
+=======
+const WS_API = import.meta.env.VITE_WS_URL || '';
+>>>>>>> 84687b719dadb2b8b6fedd94ed53cc87c674f615
 const STORAGE = 'campus-session-token';
 
 const pages = [
@@ -56,7 +60,11 @@ function App() {
     } catch (error) {
       if (error instanceof TypeError) {
         throw new Error(
+<<<<<<< HEAD
           'Campus Commons could not reach its API. Check that the app services and database are running.'
+=======
+          'Campus Commons could not reach its API. Check that the deployed backend is running and connected to its database.'
+>>>>>>> 84687b719dadb2b8b6fedd94ed53cc87c674f615
         );
       }
       throw error;
@@ -66,7 +74,12 @@ function App() {
 
     if (!response.ok) {
       throw new Error(
+<<<<<<< HEAD
         data.error || 'The request could not be completed.'
+=======
+        data.error ||
+          `Campus Commons API returned HTTP ${response.status}. Check the Render service and its database connection.`
+>>>>>>> 84687b719dadb2b8b6fedd94ed53cc87c674f615
       );
     }
 
@@ -369,7 +382,10 @@ function App() {
               request={request}
               setError={setError}
               configured={featureConfig?.translationConfigured}
+<<<<<<< HEAD
               provider={featureConfig?.translationProvider}
+=======
+>>>>>>> 84687b719dadb2b8b6fedd94ed53cc87c674f615
             />
           )}
 
@@ -1062,6 +1078,7 @@ function ResourceBoard({
     }
   };
 
+<<<<<<< HEAD
   const remove = async (item) => {
     if (!window.confirm(`Remove “${item.name}” from the campus board?`)) return;
     try {
@@ -1071,6 +1088,8 @@ function ResourceBoard({
     } catch (e) { setError(e.message); }
   };
 
+=======
+>>>>>>> 84687b719dadb2b8b6fedd94ed53cc87c674f615
   const shown = items.filter((x) =>
     (filter === 'All' || x.category === filter) &&
     x.name.toLowerCase().includes(search.toLowerCase())
@@ -1208,12 +1227,15 @@ function ResourceBoard({
                 </button>
               )}
 
+<<<<<<< HEAD
               {isTeacher && Number(x.created_by) === Number(user.id) && (
                 <button className="btn btn-outline-primary w-100 mt-3" onClick={() => remove(x)}>
                   Remove resource
                 </button>
               )}
 
+=======
+>>>>>>> 84687b719dadb2b8b6fedd94ed53cc87c674f615
             </article>
           ))}
 
@@ -1238,7 +1260,11 @@ function ResourceBoard({
 // ONLINE CLASSES
 // =====================================================
 
+<<<<<<< HEAD
 function ClassRoomCard({ item, onJoin, onRemove }) {
+=======
+function ClassRoomCard({ item, onJoin }) {
+>>>>>>> 84687b719dadb2b8b6fedd94ed53cc87c674f615
   return (
     <article className="session-card">
 
@@ -1267,8 +1293,11 @@ function ClassRoomCard({ item, onJoin, onRemove }) {
         Join class <span>↗</span>
       </button>
 
+<<<<<<< HEAD
       {onRemove && <button className="btn btn-outline-primary w-100 mt-2" onClick={() => onRemove(item)}>Remove class</button>}
 
+=======
+>>>>>>> 84687b719dadb2b8b6fedd94ed53cc87c674f615
     </article>
   );
 }
@@ -1319,6 +1348,7 @@ function Classroom({
     }
   };
 
+<<<<<<< HEAD
   const remove = async (item) => {
     if (!window.confirm(`Remove the class “${item.title}”?`)) return;
     try {
@@ -1328,6 +1358,8 @@ function Classroom({
     } catch (e) { setError(e.message); }
   };
 
+=======
+>>>>>>> 84687b719dadb2b8b6fedd94ed53cc87c674f615
   return (
     <>
       <PageHeader
@@ -1411,7 +1443,10 @@ function Classroom({
               key={x.id}
               item={x}
               onJoin={onJoin}
+<<<<<<< HEAD
               onRemove={isTeacher && Number(x.teacherId) === Number(user.id) ? remove : undefined}
+=======
+>>>>>>> 84687b719dadb2b8b6fedd94ed53cc87c674f615
             />
           ))}
         </div>
@@ -1606,7 +1641,11 @@ function FamilyMeetings({
 // TRANSLATOR
 // =====================================================
 
+<<<<<<< HEAD
 function Translator({ request, setError, configured, provider }) {
+=======
+function Translator({ request, setError, configured }) {
+>>>>>>> 84687b719dadb2b8b6fedd94ed53cc87c674f615
   const [text, setText] = useState('');
   const [result, setResult] = useState('');
   const [target, setTarget] = useState('hi');
@@ -1678,7 +1717,11 @@ function Translator({ request, setError, configured, provider }) {
             {configured === undefined
               ? 'Checking translation service…'
               : configured
+<<<<<<< HEAD
                 ? `${provider || 'Self-hosted translator'} ready`
+=======
+                ? 'Self-hosted translation ready'
+>>>>>>> 84687b719dadb2b8b6fedd94ed53cc87c674f615
                 : 'Translation service unavailable'}
           </span>
         </div>
@@ -1794,7 +1837,14 @@ function Assistant({ request, setError, aiConfigured }) {
     try {
       const data = await request('/api/assistant/chat', {
         method: 'POST',
+<<<<<<< HEAD
         body: JSON.stringify({ message: prompt }),
+=======
+          body: JSON.stringify({
+            message: prompt,
+            history: messages.slice(-12).map(({ role, text }) => ({ role, content: text })),
+          }),
+>>>>>>> 84687b719dadb2b8b6fedd94ed53cc87c674f615
       });
 
       setMessages((current) => [
@@ -1868,9 +1918,15 @@ function Assistant({ request, setError, aiConfigured }) {
 
             <div>
               <b>Campus assistant</b>
+<<<<<<< HEAD
               <small>
                 <span className="online-dot" />
                 Ready to help
+=======
+          <small>
+                <span className="online-dot" />
+                {aiConfigured ? 'AI service configured' : 'Campus help available'}
+>>>>>>> 84687b719dadb2b8b6fedd94ed53cc87c674f615
               </small>
             </div>
 
@@ -1878,7 +1934,11 @@ function Assistant({ request, setError, aiConfigured }) {
               {aiConfigured === undefined
                 ? 'CHECKING'
                 : aiConfigured
+<<<<<<< HEAD
                   ? 'AI CONNECTED'
+=======
+                ? 'OPENAI CONFIGURED'
+>>>>>>> 84687b719dadb2b8b6fedd94ed53cc87c674f615
                   : 'BUILT-IN MODE'}
             </span>
 
@@ -2092,9 +2152,17 @@ function VideoRoom({
           localRef.current.srcObject = stream;
         }
 
+<<<<<<< HEAD
         const wsBase = API
           ? API.replace(/^http/, 'ws')
           : `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}`;
+=======
+        const wsBase = WS_API
+          ? WS_API.replace(/^http/, 'ws')
+          : API
+            ? API.replace(/^http/, 'ws')
+            : `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}`;
+>>>>>>> 84687b719dadb2b8b6fedd94ed53cc87c674f615
 
         const ws = new WebSocket(
           `${wsBase}/ws/meeting/${encodeURIComponent(code)}?token=${encodeURIComponent(token)}`
